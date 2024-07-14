@@ -88,7 +88,7 @@ def run_tests_and_validate_output():
         return {"error": f"An error occurred:\n{str(e)}"}
 
 def generate_comment(execution_time, is_new_record, percentage_improvement):
-    comment_body = f"Pull request merged successfully!\n\nExecution Time: {execution_time} ms"
+    comment_body = f"Pull request merged successfully!\n\nAverage execution time: {execution_time} ms"
 
     if is_new_record:
         print(percentage_improvement)
