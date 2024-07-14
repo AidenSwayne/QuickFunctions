@@ -24,4 +24,3 @@ def merge_sort(arr: list[int]) -> list[int]:
     result.extend(right[j:])
 
     return result
-    
