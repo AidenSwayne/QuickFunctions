@@ -66,6 +66,8 @@ def run_tests_and_validate_output():
 
                             percentage_improvement = (best_time - float(execution_time)) / best_time * 100
                             is_new_record = True
+                        else:
+                            return {"no-record": f"Not a new record.\n\nPercent slowdown: "+str((float(execution_time) - best_time)/best_time) * 100}
                     else:
                         with open("leaderboard.txt", "w") as f:
                             f.write(f"{execution_time} ms      {current_datetime}      {pr_author}\n")
@@ -97,5 +99,10 @@ def generate_comment(execution_time, is_new_record, percentage_improvement):
     return comment_body
 
 result = run_tests_and_validate_output()
-comment = generate_comment(result["execution_time"], result["is_new_record"], result["percentage_improvement"])
+if result["error"] != None:
+    print(result["error"])
+elif result["no-record"] != None:
+    print(result["no-record"])
+else:
+    comment = generate_comment(result["execution_time"], result["is_new_record"], result["percentage_improvement"])
 print(comment)
