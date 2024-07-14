@@ -1,0 +1,9 @@
+#MacOS file explorer formatting
+.DS_Store
+
+#Google Drive syncing resources
+.tmp.drivedownload
+.tmp.driveupload
+
+# Python Cache
+__pycache__/
