@@ -25,7 +25,7 @@
 | Binary Search (String) | [N/A](./javascript/binarySearchString/function.js) | [N/A](./python/binary_search_string/function.py) | [0.0001259274 ms](./c_plus_plus/binary_search_string/function.cpp) |
 | Copy Directory | [N/A](./javascript/copyDirectory/function.js) | [N/A](./python/copy_directory/function.py) | [N/A](./c_plus_plus/copy_directory/function.cpp) |
 | JSON Encoder | [0.0010445087 ms](./javascript/jsonEncoder/function.js) | [N/A](./python/json_encoder/function.py) | [N/A](./c_plus_plus/json_encoder/function.cpp) |
-| Matrix Multiply 2D | [N/A](./javascript/matrixMultiply2d/function.js) | [N/A](./python/matrix_multiply_2d/function.py) | [N/A](./c_plus_plus/matrix_multiply_2d/function.cpp) |
+| Matrix Multiply 2D | [N/A](./javascript/matrixMultiply2d/function.js) | [0.1259787020 ms](./python/matrix_multiply_2d/function.py) | [N/A](./c_plus_plus/matrix_multiply_2d/function.cpp) |
 | Merge Sort | [1.4335298317 ms](./javascript/mergeSort/function.js) | [N/A](./python/merge_sort/function.py) | [N/A](./c_plus_plus/merge_sort/function.cpp) |
 | Quicksort | [1.7712410480 ms](./javascript/quicksort/function.js) | [5.9636666157 ms](./python/quicksort/function.py) | [N/A](./c_plus_plus/quicksort/function.cpp) |
 | Validate Password | [0.0013593010 ms](./javascript/validatePassword/function.js) | [0.0015716631 ms](./python/validate_password/function.py) | [N/A](./c_plus_plus/validate_password/function.cpp) |
