@@ -7,7 +7,7 @@ int binary_search_int(const std::vector<int>& arr, int target) {
     unsigned indices [] = { 0, arr.size() };
     
 
-    while (indices[0] < indices[1]) {
+    while (indices[0] + 1 < indices[1]) {
         //    Note: Can fail due to overflow, but unlikely to in the test action. Add half of diference to avoid.
         unsigned mid = (indices[0] + indices[1]) / 2;
 
