@@ -1,0 +1,24 @@
+import subprocess
+import os
+
+def validate_changed_files():
+    subprocess.run(["git", "fetch", "origin", "main"])
+    changed_files = subprocess.run(["git", "diff", "--name-only", "HEAD", "origin/main"], capture_output=True, text=True).stdout.strip()
+    print(f"Changed files: {changed_files}")
+
+    if len(changed_files.split("\n")) != 1:
+        return "Only one file should be changed in a pull request."
+
+    is_valid_python = changed_files.startswith("python/") and changed_files.endswith("/function.py")
+    is_valid_javascript = changed_files.startswith("javascript/") and changed_files.endswith("/function.js")
+    is_valid_cpp = changed_files.startswith("c_plus_plus/") and changed_files.endswith("/function.cpp")
+
+    if not (is_valid_python or is_valid_javascript or is_valid_cpp):
+        return "Changed file should be either 'function.py' in a function directory under the 'python' directory, 'function.js' in a function directory under the 'javascript' directory, or 'function.cpp' in a function directory under the 'c_plus_plus' directory."
+
+    return None
+
+error_message = validate_changed_files()
+if error_message:
+    with open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "temp.txt"), "w") as f:
+        f.write(error_message)
