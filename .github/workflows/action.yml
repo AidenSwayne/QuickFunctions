@@ -127,7 +127,8 @@ jobs:
         git add .
         
         # Remove files that don't end with README.md or leaderboard.txt
-        git diff --cached --name-only | grep -v -E '(README\.md|leaderboard\.txt)$' | xargs git reset HEAD
+        # temporarily disabled
+        # git diff --cached --name-only | grep -v -E '(README\.md|leaderboard\.txt)$' | xargs git reset HEAD
         
         git commit -m "Update leaderboard"
         git push origin main
