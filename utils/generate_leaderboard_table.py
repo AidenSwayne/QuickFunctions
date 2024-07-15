@@ -24,7 +24,6 @@ def generate_table():
 | Binary Search (Float) | [js_time](./javascript/binarySearchFloat/function.js) | [py_time](./python/binary_search_float/function.py) | [cpp_time](./c_plus_plus/binary_search_float/function.cpp) |
 | Binary Search (Int) | [js_time](./javascript/binarySearchInt/function.js) | [py_time](./python/binary_search_int/function.py) | [cpp_time](./c_plus_plus/binary_search_int/function.cpp) |
 | Binary Search (String) | [js_time](./javascript/binarySearchString/function.js) | [py_time](./python/binary_search_string/function.py) | [cpp_time](./c_plus_plus/binary_search_string/function.cpp) |
-| Copy Directory | [js_time](./javascript/copyDirectory/function.js) | [py_time](./python/copy_directory/function.py) | [cpp_time](./c_plus_plus/copy_directory/function.cpp) |
 | JSON Encoder | [js_time](./javascript/jsonEncoder/function.js) | [py_time](./python/json_encoder/function.py) | [cpp_time](./c_plus_plus/json_encoder/function.cpp) |
 | Matrix Multiply 2D | [js_time](./javascript/matrixMultiply2d/function.js) | [py_time](./python/matrix_multiply_2d/function.py) | [cpp_time](./c_plus_plus/matrix_multiply_2d/function.cpp) |
 | Merge Sort | [js_time](./javascript/mergeSort/function.js) | [py_time](./python/merge_sort/function.py) | [cpp_time](./c_plus_plus/merge_sort/function.cpp) |
@@ -33,13 +32,13 @@ def generate_table():
 '''
     functions = [
         'binary_search_float', 'binary_search_int', 'binary_search_string',
-        'copy_directory', 'json_encoder', 'matrix_multiply_2d',
+        'json_encoder', 'matrix_multiply_2d',
         'merge_sort', 'quicksort', 'validate_password'
     ]
     
     js_functions = [
         'binarySearchFloat', 'binarySearchInt', 'binarySearchString',
-        'copyDirectory', 'jsonEncoder', 'matrixMultiply2d',
+        'jsonEncoder', 'matrixMultiply2d',
         'mergeSort', 'quicksort', 'validatePassword'
     ]
     
