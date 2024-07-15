@@ -99,10 +99,10 @@ def generate_comment(execution_time, is_new_record, percentage_improvement):
     return comment_body
 
 result = run_tests_and_validate_output()
-if result["error"] != None:
+if "error" in result:
     print(result["error"])
-elif result["no-record"] != None:
+elif "no-record" in result:
     print(result["no-record"])
 else:
     comment = generate_comment(result["execution_time"], result["is_new_record"], result["percentage_improvement"])
-print(comment)
+    print(comment)
