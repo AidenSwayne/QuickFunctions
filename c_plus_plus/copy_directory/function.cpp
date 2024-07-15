@@ -10,7 +10,6 @@ bool copy_directory(const std::string& source_dir, const std::string& destinatio
         if (fs::exists(destination_dir)) {
             fs::remove_all(destination_dir);
         }
-
         // Copy the source directory to the destination directory
         fs::copy(source_dir, destination_dir, fs::copy_options::recursive);
         return true;
