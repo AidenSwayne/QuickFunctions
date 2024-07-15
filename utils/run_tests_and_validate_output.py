@@ -1,3 +1,4 @@
+print("Began file run")
 import os
 import subprocess
 import re
