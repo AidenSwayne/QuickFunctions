@@ -12,4 +12,3 @@ function copyDirectory(sourceDir, destinationDir) {
     return true;
 }
 module.exports = { copyDirectory };
-module.exports = { copyDirectory };
