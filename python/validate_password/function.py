@@ -11,7 +11,6 @@ def validate_password(password):
     if len(password) < 8 or len(password) > 64:
         return False
     
-    
     has_uppercase = False
     has_lowercase = False
     has_digit = False
