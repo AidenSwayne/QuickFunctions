@@ -6,7 +6,7 @@ import datetime
 
 def run_tests_and_validate_output():
     try:
-        print("Reached test running")
+        print("Reached test running block")
         subprocess.run(["git", "fetch", "origin", "main"])
         print("Fetched main")
         changed_files = subprocess.run(["git", "diff", "--name-only", "HEAD", "origin/main"], capture_output=True, text=True).stdout.strip()
@@ -15,13 +15,13 @@ def run_tests_and_validate_output():
         function_dir = os.path.dirname(file_path)
 
         os.chdir(os.path.join(os.environ["GITHUB_WORKSPACE"], function_dir))
-
+        print("Began testing")
         if file_path.endswith('.py'):
             output = subprocess.run(["python", "tests.py"], capture_output=True, text=True).stdout.strip()
         elif file_path.endswith('.js'):
             output = subprocess.run(["node", "tests.js"], capture_output=True, text=True).stdout.strip()
         elif file_path.endswith('.cpp'):
-            compile_result = subprocess.run(["g++", "-o", "tests", "tests.cpp", "function.cpp"], capture_output=True, text=True)
+            compile_result = subprocess.run(["g++", "-o", "tests", "tests.cpp", "function.cpp"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             if compile_result.returncode != 0:
                 return {"error": f"C++ compilation failed:\n{compile_result.stderr}"}
             if os.path.exists("./tests"):

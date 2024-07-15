@@ -9,6 +9,8 @@
 namespace fs = std::filesystem;
 
 void create_test_files(const std::string& directory) {
+    std::cout.setf(std::ios::unitbuf);
+    std::cout << "Began creating the test files";
     fs::create_directories(fs::path(directory) / "subdir1" / "subsubdir1");
     fs::create_directories(fs::path(directory) / "subdir2");
 
@@ -30,6 +32,7 @@ void create_test_files(const std::string& directory) {
     for (int i = 0; i < 200 * 1024 * 1024; ++i) {
         file_200MB.put(static_cast<char>(dis(gen)));
     }
+    std::cout << "Finished creating the test files";
 }
 
 bool compare_directories(const fs::path& dir1, const fs::path& dir2) {
@@ -66,6 +69,7 @@ void validate_copy_directory(const std::string& source_dir, const std::string& d
 }
 
 int main() {
+    std::cout.setf(std::ios::unitbuf);
     fs::path temp_test_dir = fs::temp_directory_path() / "test_files_";
     fs::create_directories(temp_test_dir);
 
@@ -78,7 +82,7 @@ int main() {
     };
 
     double total_execution_time = 0.0;
-
+    std::cout << "Began running the validation test cases";
     for (const auto& [source_dir, destination_dir] : test_cases) {
         fs::path temp_source_dir = fs::temp_directory_path() / source_dir;
         fs::path temp_destination_dir = fs::temp_directory_path() / destination_dir;
@@ -99,9 +103,10 @@ int main() {
         fs::remove_all(temp_source_dir);
         fs::remove_all(temp_destination_dir);
     }
-
+    std::cout << "Finished running the validation test cases";
     int random_case_count = 100;
     for (int i = 0; i < random_case_count; ++i) {
+        std::cout << "Began a random test case loop";
         fs::path temp_source_dir = fs::temp_directory_path() / ("random_source_" + std::to_string(i));
         fs::path temp_destination_dir = fs::temp_directory_path() / ("random_destination_" + std::to_string(i));
 
@@ -124,6 +129,7 @@ int main() {
 
         fs::remove_all(temp_source_dir);
         fs::remove_all(temp_destination_dir);
+        std::cout << "Finished a random test case loop";
     }
 
     fs::remove_all(temp_test_dir);
