@@ -1,5 +1,7 @@
 #include "function.h"
 
+// This function should return the lowest index in sorted array arr where target is located.
+
 int binary_search_int(const std::vector<int>& arr, int target) {
     int left = 0;
     int right = arr.size() - 1;
