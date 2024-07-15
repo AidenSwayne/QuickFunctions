@@ -37,7 +37,7 @@ def run_tests_and_validate_output():
                 return {"error": f"Implementation failed one or more test cases:\n{failing_test_case}"}
             else:
                 return {"error": "Implementation failed one or more test cases."}
-
+        print(output)
         execution_time_match = re.search(r"Average execution time: ([\d.]+)", output)
         if execution_time_match:
             execution_time = execution_time_match.group(1)
