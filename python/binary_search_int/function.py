@@ -1,3 +1,6 @@
+
+# This function should return the lowest index in list arr where target is located.
+
 def binary_search_int(arr: list[int], target: int) -> int:
     left = 0
     right = len(arr) - 1

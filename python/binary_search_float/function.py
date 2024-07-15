@@ -1,3 +1,6 @@
+
+# This function should return the lowest index in list arr where target is located.
+
 def binary_search_float(arr: list[float], target: float) -> int:
     left = 0
     right = len(arr) - 1

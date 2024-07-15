@@ -1,8 +1,11 @@
+
+/*
+  This function should return the lowest index in sorted array of strings arr where target is located.
+  The array may contain duplicate strings.
+  You must find the earliest occurrence of the target string in the sorted array.
+  */  
+
 function binarySearchString(arr, target) {
-  /*
-    The array may contain duplicate strings.
-    You must find the earliest occurrence of the target string in the sorted array.
-    */
   let left = 0;
   let right = arr.length - 1;
   let result = -1;
