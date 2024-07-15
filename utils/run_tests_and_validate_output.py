@@ -5,12 +5,15 @@ import datetime
 
 def run_tests_and_validate_output():
     try:
+        print("Reached test running")
         subprocess.run(["git", "fetch", "origin", "main"])
+        print("Fetched main")
         changed_files = subprocess.run(["git", "diff", "--name-only", "HEAD", "origin/main"], capture_output=True, text=True).stdout.strip()
+        print("Calculated Diff")
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
 
-        os.chdir(os.path.join(os.environ["GITHUB_WORKSPACE"], function_dir))
+        #os.chdir(os.path.join(os.environ["GITHUB_WORKSPACE"], function_dir))
 
         if file_path.endswith('.py'):
             output = subprocess.run(["python", "tests.py"], capture_output=True, text=True).stdout.strip()
@@ -20,14 +23,13 @@ def run_tests_and_validate_output():
             compile_result = subprocess.run(["g++", "-o", "tests", "tests.cpp", "function.cpp"], capture_output=True, text=True)
             if compile_result.returncode != 0:
                 return {"error": f"C++ compilation failed:\n{compile_result.stderr}"}
-            
             if os.path.exists("./tests"):
                 output = subprocess.run(["./tests"], capture_output=True, text=True).stdout.strip()
             else:
                 return {"error": "C++ test executable not found after compilation."}
         else:
             return {"error": "Invalid file type. Only .py, .js, and .cpp files are supported."}
-
+        print("Finished testing")
         if "Failed" in output:
             failing_test_case_match = re.search(r"Failed test case: (.*)", output)
             if failing_test_case_match:
