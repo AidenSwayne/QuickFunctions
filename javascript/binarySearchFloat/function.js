@@ -1,5 +1,12 @@
 
-// This function should return the lowest index in array arr where target is located.
+/*
+    Parameters:
+    arr: an array of valid floats, sorted in ascending order, with duplicates.
+    target: the target float to search for, which is not guaranteed to be in the array.
+
+    return value:
+    the lowest index in arr where target is located if it is present, and -1 otherwise.
+*/
 
 function binarySearchFloat(arr, target) {    
     let left = 0;

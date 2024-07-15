@@ -1,8 +1,12 @@
 
-'''
-This function should return the lowest index in list arr where target is located.
-The list may contain duplicate strings.
-'''
+"""
+    Parameters:
+    arr: a list of possibly empty strings, sorted in ascending lexicographic order, with duplicates.
+    target: the target string to search for, which is not guaranteed to be in the array.
+
+    return value:
+    the lowest index in arr where target is located if it is present, and -1 otherwise.
+"""
 
 def binary_search_string(arr: list[str], target: str) -> int:
     left = 0
