@@ -40,7 +40,7 @@ jobs:
       id: run_tests
       run: |
         echo "Begin running tests"
-        python utils/run_tests_and_validate_output.py
+        python -u utils/run_tests_and_validate_output.py
         echo "log_output=$(echo "$output" | jq -sR .)" >> $GITHUB_OUTPUT
         echo "==== Test Output ===="
         echo "$output"
