@@ -1,6 +1,7 @@
 #include "function.h"
 #include <cmath>
 
+// This function should return the lowest index in sorted vector arr where target is located.
 
 int binary_search_float(const std::vector<double>& arr, double target) {
     int left = 0;

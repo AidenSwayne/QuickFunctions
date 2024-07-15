@@ -1,5 +1,7 @@
 #include "function.h"
 
+// This function should return the lowest index in sorted vector of strings arr where target is located.
+
 int binary_search_string(const std::vector<std::string>& arr, const std::string& target) {
     int left = 0;
     int right = arr.size() - 1;

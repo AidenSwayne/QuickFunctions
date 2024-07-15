@@ -1,3 +1,6 @@
+
+// This function should return the lowest index in array arr where target is located.
+
 function binarySearchInt(arr, target) {
     let left = 0;
     let right = arr.length - 1;

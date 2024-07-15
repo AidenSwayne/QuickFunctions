@@ -1,3 +1,4 @@
+print("Began file run")
 import os
 import subprocess
 import re
@@ -5,13 +6,16 @@ import datetime
 
 def run_tests_and_validate_output():
     try:
+        print("Reached test running")
         subprocess.run(["git", "fetch", "origin", "main"])
+        print("Fetched main")
         changed_files = subprocess.run(["git", "diff", "--name-only", "HEAD", "origin/main"], capture_output=True, text=True).stdout.strip()
+        print("Calculated Diff")
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
 
         os.chdir(os.path.join(os.environ["GITHUB_WORKSPACE"], function_dir))
-
+        print("Began testing")
         if file_path.endswith('.py'):
             output = subprocess.run(["python", "tests.py"], capture_output=True, text=True).stdout.strip()
         elif file_path.endswith('.js'):
@@ -20,14 +24,13 @@ def run_tests_and_validate_output():
             compile_result = subprocess.run(["g++", "-o", "tests", "tests.cpp", "function.cpp"], capture_output=True, text=True)
             if compile_result.returncode != 0:
                 return {"error": f"C++ compilation failed:\n{compile_result.stderr}"}
-            
             if os.path.exists("./tests"):
                 output = subprocess.run(["./tests"], capture_output=True, text=True).stdout.strip()
             else:
                 return {"error": "C++ test executable not found after compilation."}
         else:
             return {"error": "Invalid file type. Only .py, .js, and .cpp files are supported."}
-
+        print("Finished testing")
         if "Failed" in output:
             failing_test_case_match = re.search(r"Failed test case: (.*)", output)
             if failing_test_case_match:
@@ -35,7 +38,7 @@ def run_tests_and_validate_output():
                 return {"error": f"Implementation failed one or more test cases:\n{failing_test_case}"}
             else:
                 return {"error": "Implementation failed one or more test cases."}
-
+        print("Full output: "+output)
         execution_time_match = re.search(r"Average execution time: ([\d.]+)", output)
         if execution_time_match:
             execution_time = execution_time_match.group(1)
@@ -66,6 +69,8 @@ def run_tests_and_validate_output():
 
                             percentage_improvement = (best_time - float(execution_time)) / best_time * 100
                             is_new_record = True
+                        else:
+                            return {"no-record": f"Not a new record.\n\nPercent slowdown: "+str((float(execution_time) - best_time)/best_time) * 100}
                     else:
                         with open("leaderboard.txt", "w") as f:
                             f.write(f"{execution_time} ms      {current_datetime}      {pr_author}\n")
@@ -97,5 +102,10 @@ def generate_comment(execution_time, is_new_record, percentage_improvement):
     return comment_body
 
 result = run_tests_and_validate_output()
-comment = generate_comment(result["execution_time"], result["is_new_record"], result["percentage_improvement"])
-print(comment)
+if "error" in result:
+    print(result["error"])
+elif "no-record" in result:
+    print(result["no-record"])
+else:
+    comment = generate_comment(result["execution_time"], result["is_new_record"], result["percentage_improvement"])
+    print(comment)

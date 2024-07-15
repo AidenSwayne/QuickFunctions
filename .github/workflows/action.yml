@@ -6,6 +6,7 @@ on:
 
 jobs:
   validate_pull_request:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -38,7 +39,8 @@ jobs:
     - name: Run Tests and Validate Output
       id: run_tests
       run: |
-        output=$(python utils/run_tests_and_validate_output.py)
+        echo "Begin running tests"
+        python -u utils/run_tests_and_validate_output.py
         echo "log_output=$(echo "$output" | jq -sR .)" >> $GITHUB_OUTPUT
         echo "==== Test Output ===="
         echo "$output"
