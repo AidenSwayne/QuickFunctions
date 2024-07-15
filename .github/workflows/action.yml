@@ -6,6 +6,7 @@ on:
 
 jobs:
   validate_pull_request:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
