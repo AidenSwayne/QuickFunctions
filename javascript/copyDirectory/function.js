@@ -11,5 +11,3 @@ function copyDirectory(sourceDir, destinationDir) {
     fs.cpSync(sourceDir, destinationDir, { recursive: true });
     return true;
 }
-module.exports = { copyDirectory };
-module.exports = { copyDirectory };
