@@ -40,7 +40,7 @@ jobs:
       id: run_tests
       run: |
         echo "Begin running tests"
-        python -u utils/run_tests_and_validate_output.py
+        output=$(python utils/run_tests_and_validate_output.py)
         echo "log_output=$(echo "$output" | jq -sR .)" >> $GITHUB_OUTPUT
         echo "==== Test Output ===="
         echo "$output"
@@ -68,10 +68,7 @@ jobs:
         comment_body = '''${{ steps.run_tests.outputs.log_output }}'''
 
         # Remove leading and trailing quotes
-        if comment_body[0] == '"':
-            comment_body = comment_body[1:]
-        if comment_body[-1] == '"':
-            comment_body = comment_body[:-1]
+        comment_body=comment_body.strip("\"")
         
         if comment_body.startswith('0.0'):
             # remove 0.0 and newline
