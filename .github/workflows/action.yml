@@ -53,6 +53,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
         REPO: ${{ github.repository }}
+        OWNER: ${{github.repository_owner}}
       run: |
         python3 << EOF
         import os
@@ -63,6 +64,7 @@ jobs:
         token = os.environ['GH_TOKEN']
         pr_number = os.environ['PR_NUMBER']
         repo = os.environ['REPO']
+        owner = os.environ['OWNER']
 
         # Get the comment body from the previous step's output
         comment_body = '''${{ steps.run_tests.outputs.log_output }}'''
@@ -83,8 +85,8 @@ jobs:
         print("----------------")
 
         # Construct the API URL
-        api_url = f"https://api.github.com/repos/AidenSwayne/{repo}/issues/{pr_number}/comments"
-
+        api_url = f"https://api.github.com/repos/{owner}/{repo}/pull/{pr_number}/comments"
+        print(api_url)
         # Set up headers
         headers = {
             "Authorization": f"token {token}",
