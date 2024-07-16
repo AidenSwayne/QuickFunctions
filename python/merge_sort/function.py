@@ -8,7 +8,6 @@ def merge_sort(arr: list[int]) -> list[int]:
 
     left = merge_sort(left)
     right = merge_sort(right)
-
     result = []
     i = j = 0
 
