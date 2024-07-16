@@ -1,7 +1,7 @@
 name: QuickFunctions Pull Request Validation
 
 on:
-  pull_request:
+  pull_request_target:
     branches: 
       - main
 
@@ -9,7 +9,10 @@ jobs:
   validate_pull_request:
     timeout-minutes: 30
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      pull-requests: write
+      contents: write
+      issues: write
 
     steps:
     - uses: actions/checkout@v3
