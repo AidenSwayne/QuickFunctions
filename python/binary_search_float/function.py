@@ -12,7 +12,6 @@ def binary_search_float(arr: list[float], target: float) -> int:
     right = len(arr) - 1
     result = -1
     
-
     while left <= right:
         mid = (left + right) // 2
 
