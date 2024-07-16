@@ -6,16 +6,12 @@ import datetime
 
 def run_tests_and_validate_output():
     try:
-        print("Reached test running")
         subprocess.run(["git", "fetch", "origin", "main"])
-        print("Fetched main")
         changed_files = subprocess.run(["git", "diff", "--name-only", "HEAD", "origin/main"], capture_output=True, text=True).stdout.strip()
-        print("Calculated Diff")
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
 
         os.chdir(os.path.join(os.environ["GITHUB_WORKSPACE"], function_dir))
-        print("Began testing")
         if file_path.endswith('.py'):
             output = subprocess.run(["python", "tests.py"], capture_output=True, text=True).stdout.strip()
         elif file_path.endswith('.js'):
@@ -30,7 +26,6 @@ def run_tests_and_validate_output():
                 return {"error": "C++ test executable not found after compilation."}
         else:
             return {"error": "Invalid file type. Only .py, .js, and .cpp files are supported."}
-        print("Finished testing")
         if "Failed" in output:
             failing_test_case_match = re.search(r"Failed test case: (.*)", output)
             if failing_test_case_match:
@@ -43,7 +38,7 @@ def run_tests_and_validate_output():
         if execution_time_match:
             execution_time = execution_time_match.group(1)
         else:
-            return {"error": "Unable to find execution time in the output."}
+            return {"error": f"Unable to find execution time in the output. Here is the full file output: {output}"}
 
         is_new_record = False
         percentage_improvement = 0.0
