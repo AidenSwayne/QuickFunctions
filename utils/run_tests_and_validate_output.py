@@ -65,7 +65,7 @@ def run_tests_and_validate_output():
                             percentage_improvement = (best_time - float(execution_time)) / best_time * 100
                             is_new_record = True
                         else:
-                            return {"no-record": f"Not a new record.\n\nPercent slowdown: "+str((float(execution_time) - best_time)/best_time) * 100}
+                            return {"no-record": f"Not a new record.\n\nPercent slowdown: "+str(((float(execution_time) - best_time)/best_time) * 100)+"%"}
                     else:
                         with open("leaderboard.txt", "w") as f:
                             f.write(f"{execution_time} ms      {current_datetime}      {pr_author}\n")
