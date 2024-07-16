@@ -10,7 +10,7 @@ def run_tests_and_validate_output():
         changed_files = subprocess.run(["git", "diff", "--name-only", "HEAD", "origin/main"], capture_output=True, text=True).stdout.strip()
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
-        print(file_path)
+        print("Filepath: "+file_path)
         os.chdir(os.path.join(os.environ["GITHUB_WORKSPACE"], function_dir))
         if file_path.endswith('.py'):
             output = subprocess.run(["python", "tests.py"], capture_output=True, text=True).stdout.strip()
