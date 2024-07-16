@@ -1,7 +1,6 @@
 def json_encode(data: any) -> str:
     import json
 
-    1
 
     def custom_json_encoder(obj):
         if isinstance(obj, set):
