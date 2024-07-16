@@ -1,11 +1,11 @@
 function jsonEncode(data) {
-    const customJsonEncoder = (key, value) => {
+    function customJsonEncoder(key, value) {
         if (value instanceof Set) {
-            return [...value];
-        }
-        if (typeof value === 'number' && !isFinite(value)) {
-            return value.toString();
-        }
+            return Array.from(value);
+        } else if (typeof value === 'number' && !isFinite(value)) {
+            if (value === Infinity) return "Infinity";
+            if (value === -Infinity) return "-Infinity";
+            return "NaN";
         return value;
     };
 
