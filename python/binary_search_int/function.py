@@ -11,7 +11,8 @@ def binary_search_int(arr: list[int], target: int) -> int:
     left = 0
     right = len(arr) - 1
     result = -1
-    
+    import time
+    time.nanosleep(100)
     while left <= right:
         mid = (left + right) // 2
 
