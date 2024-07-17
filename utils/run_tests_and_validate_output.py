@@ -11,7 +11,7 @@ def run_tests_and_validate_output(destinationREF ,sourceSHA, destinationSHA):
         main_branch="main"
         print(current_branch)
         print(main_branch)
-        raw = subprocess.run(["git", "diff", f"origin/{main_branch}...{current_branch}", "--name-only"], capture_output=True, text=True)
+        raw = subprocess.run(["git", "diff","--name-only", f"origin/{main_branch}...{current_branch}"], capture_output=True, text=True)
         file_dir = os.path.dirname(raw.stdout.strip().split("\n")[0])
         print(raw.returncode)
         print(raw.stdout)
