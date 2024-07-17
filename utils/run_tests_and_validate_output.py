@@ -4,12 +4,13 @@ import subprocess
 import re
 import datetime
 
-def run_tests_and_validate_output(source, destination):
+def run_tests_and_validate_output(destinationREF ,sourceSHA, destinationSHA):
     try:
-        subprocess.run(["git","fetch","--all"])
-        print(source)
-        print(destination)
-        raw = subprocess.run(["git", "diff", "--name-only", f"origin/{source}", f"origin/{destination}"], capture_output=True, text=True)
+        subprocess.run(["git", "remote", "add", "base", f"https://github.com/{os.environ["REPO"]}.git"])
+        subprocess.run(["git","fetch","base",destinationREF])
+        print(sourceSHA)
+        print(destinationSHA)
+        raw = subprocess.run(["git", "diff", "--name-only", sourceSHA, destinationSHA], capture_output=True, text=True)
         print(raw.returncode)
         print(raw.stdout)
         print(raw.stderr)
