@@ -6,20 +6,23 @@ import datetime
 
 def run_tests_and_validate_output(destinationREF ,sourceSHA, destinationSHA):
     try:
-        subprocess.run(["git", "remote", "add", "base", f"https://github.com/{os.environ["REPO"]}.git"])
-        subprocess.run(["git","fetch","base",destinationREF])
-        print(sourceSHA)
-        print(destinationSHA)
-        raw = subprocess.run(["git", "diff", "--name-only", sourceSHA, destinationSHA], capture_output=True, text=True)
+        subprocess.run(["git","fetch","origin"])
+        current_branch=subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"])
+        main_branch="main"
+        print(current_branch)
+        print(main_branch)
+        raw = subprocess.run(["git", "diff", f"origin/{main_branch}...{current_branch}", "--name-only"], capture_output=True, text=True)
+        file_dir = os.path.dirname(raw.strip().split("\n")[0])
         print(raw.returncode)
         print(raw.stdout)
         print(raw.stderr)
+        print(file_dir)
         changed_files=raw.stdout.strip()
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
         print("Filepath: "+file_path)
         print("workspace:"+os.environ["GITHUB_WORKSPACE"])
-        os.chdir(os.path.join(os.environ["GITHUB_WORKSPACE"], function_dir))
+        os.chdir(function_dir)
         if file_path.endswith('.py'):
             output = subprocess.run(["python", "tests.py"], capture_output=True, text=True).stdout.strip()
         elif file_path.endswith('.js'):
