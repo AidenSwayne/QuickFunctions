@@ -7,6 +7,7 @@ import datetime
 def run_tests_and_validate_output(source, destination):
     try:
         changed_files = subprocess.run(["git", "diff", "--name-only", f"origin/{source}", f"origin/{destination}"], capture_output=True, text=True).stdout.strip()
+        print(changed_files)
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
         print("Filepath: "+file_path)
