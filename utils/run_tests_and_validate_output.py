@@ -95,7 +95,7 @@ def generate_comment(execution_time, is_new_record, percentage_improvement):
         comment_body += f"\n\nCongratulations! You achieved a new record time with an improvement of {percentage_improvement:.2f}%!"
 
     return comment_body
-
+print(os.environ["GITHUB_REF"])
 result = run_tests_and_validate_output()
 if "error" in result:
     print(result["error"])
