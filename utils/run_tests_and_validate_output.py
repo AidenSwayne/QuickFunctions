@@ -9,11 +9,11 @@ def run_tests_and_validate_output(destinationREF ,sourceSHA, destinationSHA):
         subprocess.run(["git","fetch","origin"])
         current_branch=subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"])
         main_branch="main"
-        print(current_branch.stdout)
+        print("OUT:"+current_branch.stdout)
         print(main_branch)
         raw = subprocess.run(["git", "diff","--name-only", f"origin/{main_branch}...{current_branch}"], capture_output=True, text=True)
         file_dir = os.path.dirname(raw.stdout.strip().split("\n")[0])
-        print("CODE:"+raw.returncode)
+        print("CODE:"+str(raw.returncode))
         print("OUT:"+raw.stdout)
         print("ERR:"+raw.stderr)
         print("DIR:"+file_dir)
