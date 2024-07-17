@@ -7,6 +7,8 @@ import datetime
 def run_tests_and_validate_output(source, destination):
     try:
         subprocess.run(["git","fetch","--all"])
+        print(source)
+        print(destination)
         raw = subprocess.run(["git", "diff", "--name-only", f"origin/{source}", f"origin/{destination}"], capture_output=True, text=True)
         print(raw.returncode)
         print(raw.stdout)
