@@ -41,8 +41,8 @@ jobs:
     - name: Run Tests and Validate Output
       id: run_tests
       env: 
-        GITHUB_REF: ${{github.ref}}
-        GITHUB_CONTEXT: ${{toJson(github)}}
+        MERGE_DESTINATION_URL: ${{github.repositoryUrl}}
+        MERGE_SOURCE_URL: ${{github.event.pull_request.head.repo.clone_url}}
       run: |
         echo "Begin running tests"
         output=$(python utils/run_tests_and_validate_output.py)
