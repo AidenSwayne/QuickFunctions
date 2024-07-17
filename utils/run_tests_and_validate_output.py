@@ -96,6 +96,7 @@ def generate_comment(execution_time, is_new_record, percentage_improvement):
 
     return comment_body
 print(os.environ["GITHUB_REF"])
+print(os.environ["GITHUB_CONTEXT"])
 result = run_tests_and_validate_output()
 if "error" in result:
     print(result["error"])
