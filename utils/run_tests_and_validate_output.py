@@ -7,9 +7,11 @@ import datetime
 def run_tests_and_validate_output(destinationREF ,sourceSHA, destinationSHA):
     try:
         subprocess.run(["git","fetch","origin"])
-        current_branch=subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"])
+        current_branch=subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], capture_output=True, text=True)
         main_branch="main"
-        print("OUT:"+current_branch.stdout)
+        print("CODE:"+str(current_branch.returncode))
+        print("ERR:"+str(current_branch.stderr))
+        print("OUT:"+str(current_branch.stdout))
         print(main_branch)
         raw = subprocess.run(["git", "diff","--name-only", f"origin/{main_branch}...{current_branch}"], capture_output=True, text=True)
         file_dir = os.path.dirname(raw.stdout.strip().split("\n")[0])
