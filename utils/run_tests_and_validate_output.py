@@ -6,9 +6,10 @@ import datetime
 
 def run_tests_and_validate_output(source, destination):
     try:
-        subprocess.run(["git", "remote", "add", "-f", "source",source])
+        subprocess.run(["git", "clone", source, "source"])
+        os.chdir("source")
         subprocess.run(["git", "remote", "add", "-f", "destination",destination])
-        changed_files = subprocess.run(["git", "diff", "--name-only", "remotes/source/master", "remotes/destination/master"], capture_output=True, text=True).stdout.strip()
+        changed_files = subprocess.run(["git", "diff", "--name-only", "master", "destination/master"], capture_output=True, text=True).stdout.strip()
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
         print("Filepath: "+file_path)
