@@ -105,7 +105,8 @@ def generate_comment(execution_time, is_new_record, percentage_improvement):
     return comment_body
 sourcePath=os.environ["MERGE_SOURCE"]
 destinationPath=os.environ["MERGE_DESTINATION"]
-result = run_tests_and_validate_output(sourcePath, destinationPath)
+destinationref=os.environ["REPO"]
+result = run_tests_and_validate_output(destinationref,sourcePath, destinationPath)
 if "error" in result:
     print(result["error"])
 elif "no-record" in result:
