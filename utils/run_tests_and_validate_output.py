@@ -97,7 +97,7 @@ def generate_comment(execution_time, is_new_record, percentage_improvement):
 
     return comment_body
 source_URL=os.environ["MERGE_SOURCE_URL"]
-destination_URL=os.environ["GITHUB_CONTEXT"]
+destination_URL=os.environ["MERGE_DESTINARION_URL"]
 result = run_tests_and_validate_output(source_URL, destination_URL)
 if "error" in result:
     print(result["error"])
