@@ -43,6 +43,7 @@ jobs:
       env: 
         MERGE_DESTINATION_URL: ${{github.repositoryUrl}}
         MERGE_SOURCE_URL: ${{github.event.pull_request.head.repo.clone_url}}
+        GITHUB_CONTEXT: ${{toJson(github)}}
       run: |
         echo "Begin running tests"
         output=$(python utils/run_tests_and_validate_output.py)

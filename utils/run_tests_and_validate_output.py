@@ -9,7 +9,7 @@ def run_tests_and_validate_output(source, destination):
         subprocess.run(["git", "clone", source, "source"])
         os.chdir("source")
         subprocess.run(["git", "remote", "add", "-f", "destination",destination])
-        changed_files = subprocess.run(["git", "diff", "--name-only", "master", "destination/master"], capture_output=True, text=True).stdout.strip()
+        changed_files = subprocess.run(["git", "diff", "--name-only", "origin", "destination/master"], capture_output=True, text=True).stdout.strip()
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
         print("Filepath: "+file_path)
@@ -99,6 +99,7 @@ def generate_comment(execution_time, is_new_record, percentage_improvement):
     return comment_body
 source_URL=os.environ["MERGE_SOURCE_URL"]
 destination_URL=os.environ["MERGE_DESTINATION_URL"]
+print(os.environ["GITHUB_CONTEXT"])
 result = run_tests_and_validate_output(source_URL, destination_URL)
 if "error" in result:
     print(result["error"])
