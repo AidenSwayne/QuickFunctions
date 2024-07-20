@@ -36,7 +36,9 @@ jobs:
         git remote add fork ${{ github.event.pull_request.head.repo.clone_url }}
         git fetch fork ${{ github.event.pull_request.head.ref }}
         git checkout -b fork-branch fork/${{ github.event.pull_request.head.ref }}
-        temp= $(git diff ${{ github.event.pull_request.base.ref }}..fork-branch)
+        temp = $(git diff ${{ github.event.pull_request.base.ref }}..fork-branch)
+        testing = "Testing"
+        echo "$testing"
         echo "$temp"
     - name: Validate Changed Files
       id: validate_files
