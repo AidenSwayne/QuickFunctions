@@ -31,7 +31,12 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '14'
-
+    - name: Find Diffs
+      run: |
+        git remote add fork ${{ github.event.pull_request.head.repo.clone_url }}
+        git fetch fork ${{ github.event.pull_request.head.ref }}
+        git checkout -b fork-branch fork/${{ github.event.pull_request.head.ref }}
+        echo "git diff ${{ github.event.pull_request.base.ref }}..fork-branch"
     - name: Validate Changed Files
       id: validate_files
       run: |
