@@ -8,13 +8,13 @@ def validate_changed_files():
 
     subprocess.run(["git", "remote", "add", "fork", source])
     subprocess.run(["git", "fetch", "fork", source_ref])
-    raw1=subprocess.run(["git","merge-base",os.environ["MERGE_DESTINATION_SHA"],f"fork/{os.environ["MERGE_SOURCE_SHA"]}"],capture_output=True)
+    raw1=subprocess.run(["git","merge-base",os.environ["MERGE_DESTINATION_SHA"],"FETCH_HEAD"],capture_output=True)
     if raw1.returncode!=0:
-        print(raw1.stderr,file=sys.stderr)
+        print(raw1.stderr.decode(),file=sys.stderr)
         raise Exception
     subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
     destination_ref=raw1.stdout
-    raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}..fork-branch"], capture_output=True)
+    raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}","FETCH_HEAD"], capture_output=True)
 
     changed_files=str(raw.stdout.decode()).strip()
     if raw.returncode!=0:
