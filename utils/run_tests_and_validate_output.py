@@ -7,16 +7,10 @@ import sys
 def run_tests_and_validate_output():
     try:
         raw1=subprocess.run(["git","merge-base",os.environ["MERGE_DESTINATION_SHA"],"FETCH_HEAD"],capture_output=True)
-        print("HASH:"+str(subprocess.run(["git","rev-parse","FETCH_HEAD"],text=True,capture_output=True).stdout),flush=True, file=sys.stdout)
-        print("HASH:"+str(subprocess.run(["git","rev-parse","FETCH_HEAD"],text=True,capture_output=True).stdout),flush=True, file=sys.stderr)
-        print("HASH:"+str(subprocess.run(["git","rev-parse","FETCH_HEAD"],text=True,capture_output=True).stdout),flush=True)
         destination_ref=raw1.stdout.decode().strip("\n")
         raw = subprocess.run(["git", "diff","--name-only", destination_ref,"fork-branch"], capture_output=True, text=True)
         changed_files=raw.stdout.strip("\n")
-        print("Changed files:"+str(changed_files),flush=True,file=sys.stderr)
-        print("Changed files:"+str(changed_files),flush=True,file=sys.stdout)
-        print("Changed files:"+str(changed_files))
-        return {"Changed files:":changed_files,"HASH:":str(subprocess.run(["git","rev-parse","FETCH_HEAD"],text=True,capture_output=True).stdout)}
+        print("Changed files:"+str(changed_files),flush=True)
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
         os.chdir(function_dir)
