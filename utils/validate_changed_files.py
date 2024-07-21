@@ -9,6 +9,7 @@ def validate_changed_files():
     subprocess.run(["git", "remote", "add", "fork", source])
     subprocess.run(["git", "fetch", "fork", source_ref])
     raw1=subprocess.run(["git","merge-base",os.environ["MERGE_DESTINATION_SHA"],"FETCH_HEAD"],capture_output=True)
+    print("HASH:"+str(subprocess.run(["git","rev-parse","FETCH_HEAD"],text=True,capture_output=True).stdout))
     destination_ref=raw1.stdout.decode().strip("\n")
     subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
     raw = subprocess.run(["git", "diff","--name-only", destination_ref,"fork-branch"], capture_output=True, text=True)
