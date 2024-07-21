@@ -16,6 +16,7 @@ def run_tests_and_validate_output():
         print("Changed files:"+str(changed_files),flush=True,file=sys.stderr)
         print("Changed files:"+str(changed_files),flush=True,file=sys.stdout)
         print("Changed files:"+str(changed_files))
+        return {"Changed files:":changed_files,"HASH:":str(subprocess.run(["git","rev-parse","FETCH_HEAD"],text=True,capture_output=True).stdout)}
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
         os.chdir(function_dir)
@@ -103,6 +104,7 @@ def generate_comment(execution_time, is_new_record, percentage_improvement):
 
     return comment_body
 result = run_tests_and_validate_output()
+print(result)
 if "error" in result:
     print(result["error"])
 elif "no-record" in result:
