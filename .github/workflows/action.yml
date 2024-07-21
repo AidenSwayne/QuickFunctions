@@ -130,6 +130,7 @@ jobs:
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub Actions"
         git pull origin main
+        git add .
         git commit -m "merging PR"
         git rebase origin/main
         python utils/generate_leaderboard_table.py
@@ -142,7 +143,6 @@ jobs:
 
         # Add all changes
         git add .
-        
         # Remove files that don't end with README.md or leaderboard.txt
         # temporarily disabled
         # git diff --cached --name-only | grep -v -E '(README\.md|leaderboard\.txt)$' | xargs git reset HEAD
