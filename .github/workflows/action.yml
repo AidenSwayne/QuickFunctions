@@ -36,7 +36,8 @@ jobs:
       id: validate_files
       env:
         MERGE_SOURCE_REF: ${{ github.event.pull_request.head.ref }}
-        MERGE_DESTINATION_REF: ${{ github.event.pull_request.base.ref }}
+        MERGE_DESTINATION_SHA: ${{ github.event.pull_request.base.sha }}
+        MERGE_SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
         MERGE_SOURCE: ${{ github.event.pull_request.head.repo.clone_url }}
       run: |
         output=$(python utils/validate_changed_files.py)

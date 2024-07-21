@@ -3,9 +3,14 @@ import os
 import sys
 
 def validate_changed_files():
-    destination_ref=os.environ["MERGE_DESTINATION_REF"]
+    raw1=subprocess.run(["git","merge-base",os.environ["MERGE_DESTINATION_SHA"],os.environ["MERGE_SOURCE_SHA"]],capture_output=True)
+    if raw1.returncode!=0:
+        print(raw1.stderr,file=sys.stderr)
+        raise Exception
+    destination_ref=raw1.stdout
     source_ref=os.environ["MERGE_SOURCE_REF"]
     source=os.environ["MERGE_SOURCE"]
+
     subprocess.run(["git", "remote", "add", "fork", source])
     subprocess.run(["git", "fetch", "fork", source_ref])
     subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
