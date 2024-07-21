@@ -6,8 +6,8 @@ import datetime
 import sys
 def run_tests_and_validate_output():
     try:
-        destination_ref=os.environ["MERGE_DESTINATION_REF"]
-        print("HASH:"+str(subprocess.run(["git","rev-parse","FETCH_HEAD"],text=True,capture_output=True).stdout))
+        raw1=subprocess.run(["git","merge-base",os.environ["MERGE_DESTINATION_SHA"],"FETCH_HEAD"],capture_output=True)
+        destination_ref=raw1.stdout.decode().strip("\n")
         raw = subprocess.run(["git", "diff","--name-only", destination_ref,"fork-branch"], capture_output=True, text=True)
         changed_files=raw.stdout.strip("\n")
         print(changed_files,flush=True,file=sys.stderr)

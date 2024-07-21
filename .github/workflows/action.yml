@@ -52,6 +52,7 @@ jobs:
         MERGE_SOURCE_REF: ${{ github.event.pull_request.head.ref }}
         MERGE_DESTINATION_REF: ${{ github.event.pull_request.base.ref }}
         MERGE_SOURCE: ${{ github.event.pull_request.head.repo.clone_url }}
+        MERGE_DESTINATION_SHA: ${{ github.event.pull_request.base.sha }}
         CONTEXT: ${{toJson(github)}}
       run: |
         echo "Begin running tests"
