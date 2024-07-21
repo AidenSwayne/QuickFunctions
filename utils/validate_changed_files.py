@@ -3,21 +3,53 @@ import os
 import sys
 
 def validate_changed_files():
-    source_ref=os.environ["MERGE_SOURCE_REF"]
-    source=os.environ["MERGE_SOURCE"]
+    import os
+    import subprocess
 
-    subprocess.run(["git", "remote", "add", "fork", source])
-    subprocess.run(["git", "fetch", "fork", source_ref])
-    raw1=subprocess.run(["git","merge-base",os.environ["MERGE_DESTINATION_SHA"],"FETCH_HEAD"],capture_output=True)
-    print("RETURN CODE:"+str(raw1.returncode), file=sys.stderr)
-    print("ERR:"+raw1.stderr.decode(),file=sys.stderr)
-    print("OUT:"+raw1.stdout.decode(),file=sys.stderr)
-    destination_ref=raw1.stdout.decode().strip("\n")
-    print(destination_ref)
-    print("ERR:"+subprocess.run(["git", "rev-parse", "--verify", "FETCH_HEAD"],capture_output=True,text=True).stderr,file=sys.stderr)
-    print("OUT:"+subprocess.run(["git", "rev-parse", "--verify", "FETCH_HEAD"],capture_output=True,text=True).stdout,file=sys.stderr)
-    raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}","--","FETCH_HEAD"], capture_output=True, text=True)
-    subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
+    def run_command(cmd, capture=True):
+        result = subprocess.run(cmd, capture_output=capture, text=True)
+        if result.returncode != 0:
+            print(f"Error running command: {' '.join(cmd)}")
+            print(f"stderr: {result.stderr}")
+        return result
+
+    source_ref = os.environ["MERGE_SOURCE_REF"]
+    source = os.environ["MERGE_SOURCE"]
+    destination_sha = os.environ["MERGE_DESTINATION_SHA"]
+
+    print(f"Source Ref: {source_ref}")
+    print(f"Source: {source}")
+    print(f"Destination SHA: {destination_sha}")
+
+    run_command(["git", "remote", "add", "fork", source])
+    run_command(["git", "fetch", "fork", source_ref])
+
+    print("Current branches:")
+    run_command(["git", "branch", "-a"], capture=False)
+
+    print("Recent commit history:")
+    run_command(["git", "log", "--oneline", "--graph", "--all", "-n", "20"], capture=False)
+
+    raw1 = run_command(["git", "merge-base", destination_sha, "FETCH_HEAD"])
+    destination_ref = raw1.stdout.strip()
+
+    print(f"Base commit (merge-base result): {destination_ref}")
+
+    print("Diff between base and FETCH_HEAD:")
+    raw = run_command(["git", "diff", "--name-only", destination_ref, "FETCH_HEAD"])
+    changed_files = raw.stdout.strip().split('\n')
+
+    if changed_files:
+        print("Changed files:")
+        for file in changed_files:
+            print(file)
+    else:
+        print("No changes detected")
+
+    print("Full diff:")
+    run_command(["git", "diff", destination_ref, "FETCH_HEAD"], capture=False)
+
+    run_command(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
 
     changed_files=raw.stdout.strip()
     if raw.returncode!=0:
