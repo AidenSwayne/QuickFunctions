@@ -7,11 +7,6 @@ import datetime
 def run_tests_and_validate_output():
     try:
         destination_ref=os.environ["MERGE_DESTINATION_REF"]
-        source_ref=os.environ["MERGE_SOURCE_REF"]
-        source=os.environ["MERGE_SOURCE"]
-        subprocess.run(["git", "remote", "add", "fork", source])
-        subprocess.run(["git", "fetch", "fork", source_ref])
-        subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
         raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}..fork-branch"], capture_output=True, text=True)
         changed_files=raw.stdout.strip()
         file_path = changed_files.split("\n")[0]
