@@ -28,3 +28,4 @@
 | Merge Sort | [1.3305006549 ms](./javascript/mergeSort/function.js) | [0.9766333383 ms](./python/merge_sort/function.py) | [N/A](./c_plus_plus/merge_sort/function.cpp) |
 | Quicksort | [1.7712410480 ms](./javascript/quicksort/function.js) | [5.9636666157 ms](./python/quicksort/function.py) | [N/A](./c_plus_plus/quicksort/function.cpp) |
 | Validate Password | [0.0013593010 ms](./javascript/validatePassword/function.js) | [0.0015716631 ms](./python/validate_password/function.py) | [N/A](./c_plus_plus/validate_password/function.cpp) |
+
