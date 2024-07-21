@@ -4,14 +4,15 @@ import subprocess
 import re
 import datetime
 
-def run_tests_and_validate_output(destinationREF ,sourceSHA, destinationSHA):
+def run_tests_and_validate_output():
     try:
-        subprocess.run(["git","fetch","origin"])
-        main_branch="main"
-        print(os.environ["CONTEXT"])
-        print(origin)
-        print(main_branch)
-        raw = subprocess.run(["git", "diff","--name-only", f"origin/{main_branch}",f"{current_branch}"], capture_output=True, text=True)
+        destination=os.environ["MERGE_DESTINATION"]
+        destination_ref=os.environ["MERGE_DESTINATION_REF"]
+        source=os.environ["MERGE_SOURCE"]
+        subprocess.run(["git", "remote", "add", "fork", source])
+        subprocess.run(["git", "fetch", "fork", destination])
+        subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{destination}"])
+        raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}..fork-branch"], capture_output=True, text=True)
         file_dir = os.path.dirname(raw.stdout.strip().split("\n")[0])
         print("CODE:"+str(raw.returncode))
         print("OUT:"+raw.stdout)
