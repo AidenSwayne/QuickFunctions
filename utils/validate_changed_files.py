@@ -12,7 +12,7 @@ def validate_changed_files():
     if raw1.returncode!=0:
         print(raw1.stderr.decode(),file=sys.stderr)
         raise Exception
-    destination_ref=raw1.stdout
+    destination_ref=raw1.stdout.decode()
     print(destination_ref)
     print("ERR:"+subprocess.run(["git", "rev-parse", "--verify", "FETCH_HEAD"],capture_output=True,text=True).stderr,file=sys.stderr)
     print("OUT:"+subprocess.run(["git", "rev-parse", "--verify", "FETCH_HEAD"],capture_output=True,text=True).stdout,file=sys.stderr)
