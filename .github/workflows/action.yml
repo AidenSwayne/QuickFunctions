@@ -40,6 +40,7 @@ jobs:
         MERGE_SOURCE: ${{ github.event.pull_request.head.repo.clone_url }}
       run: |
         output=$(python utils/validate_changed_files.py)
+        echo "$output"
         echo "changed_file_path=$(echo "$output" | sed -n 's/.*Changed files: //p')" >> $GITHUB_OUTPUT
 
     - name: Run Tests and Validate Output
