@@ -9,7 +9,7 @@ def validate_changed_files():
     subprocess.run(["git", "remote", "add", "fork", source])
     subprocess.run(["git", "fetch", "fork", source_ref])
     subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
-    raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}..fork-branch"])
+    raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}..fork-branch"], capture_output=True)
 
     changed_files=str(raw.stdout).strip()
     if raw.stderr!=None:
