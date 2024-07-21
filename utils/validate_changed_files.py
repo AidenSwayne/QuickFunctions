@@ -1,5 +1,6 @@
 import subprocess
 import os
+import sys
 
 def validate_changed_files():
     destination_ref=os.environ["MERGE_DESTINATION_REF"]
@@ -12,7 +13,7 @@ def validate_changed_files():
 
     changed_files=raw.stdout.strip()
     if raw.stderr!=None:
-        print("ERR:"+raw.stderr)
+        print("ERR:"+raw.stderr, flush=True, file=sys.stderr)
         raise Exception
     print(f"Changed files: {changed_files}")
 
