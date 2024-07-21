@@ -7,6 +7,7 @@ import sys
 def run_tests_and_validate_output():
     try:
         destination_ref=os.environ["MERGE_DESTINATION_REF"]
+        print("HASH:"+str(subprocess.run(["git","rev-parse","FETCH_HEAD"],text=True,capture_output=True).stdout))
         raw = subprocess.run(["git", "diff","--name-only", destination_ref,"fork-branch"], capture_output=True, text=True)
         changed_files=raw.stdout.strip("\n")
         print(changed_files,flush=True,file=sys.stderr)
