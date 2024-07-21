@@ -9,14 +9,10 @@ def run_tests_and_validate_output():
         destination_ref=os.environ["MERGE_DESTINATION_REF"]
         source_ref=os.environ["MERGE_SOURCE_REF"]
         source=os.environ["MERGE_SOURCE"]
-        raw4 = subprocess.run(["git", "remote", "add", "fork", source])
-        raw3 = subprocess.run(["git", "fetch", "fork", source_ref])
-        raw2 = subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
+        subprocess.run(["git", "remote", "add", "fork", source])
+        subprocess.run(["git", "fetch", "fork", source_ref])
+        subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
         raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}..fork-branch"], capture_output=True, text=True)
-        print("ERR:"+(raw4.stderr if raw4.stderr else ""))
-        print("ERR:"+(raw3.stderr if raw3.stderr else ""))
-        print("ERR:"+(raw2.stderr if raw2.stderr else ""))
-        print("ERR:"+(raw.stderr if raw.stderr else ""))
         changed_files=raw.stdout.strip()
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
