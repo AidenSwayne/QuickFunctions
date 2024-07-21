@@ -107,10 +107,7 @@ def generate_comment(execution_time, is_new_record, percentage_improvement):
         comment_body += f"\n\nCongratulations! You achieved a new record time with an improvement of {percentage_improvement:.2f}%!"
 
     return comment_body
-sourcePath=os.environ["MERGE_SOURCE"]
-destinationPath=os.environ["MERGE_DESTINATION"]
-destinationref=os.environ["REPO"]
-result = run_tests_and_validate_output(destinationref,sourcePath, destinationPath)
+result = run_tests_and_validate_output()
 if "error" in result:
     print(result["error"])
 elif "no-record" in result:
