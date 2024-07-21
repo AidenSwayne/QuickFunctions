@@ -13,6 +13,9 @@ def validate_changed_files():
         print(raw1.stderr.decode(),file=sys.stderr)
         raise Exception
     destination_ref=raw1.stdout
+    print(destination_ref)
+    print("ERR:"+subprocess.run(["git", "rev-parse", "--verify", "FETCH_HEAD"],capture_output=True,text=True).stderr)
+    print("OUT:"+subprocess.run(["git", "rev-parse", "--verify", "FETCH_HEAD"],capture_output=True,text=True).stdout)
     raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}","FETCH_HEAD"], capture_output=True)
     subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
 
