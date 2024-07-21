@@ -9,7 +9,7 @@ def validate_changed_files():
     subprocess.run(["git", "remote", "add", "fork", source])
     subprocess.run(["git", "fetch", "fork", source_ref])
     raw1=subprocess.run(["git","merge-base",os.environ["MERGE_DESTINATION_SHA"],"FETCH_HEAD"],capture_output=True)
-    print("RETURN CODE:"+raw1.returncode, file=sys.stderr)
+    print("RETURN CODE:"+str(raw1.returncode), file=sys.stderr)
     print("ERR:"+raw1.stderr.decode(),file=sys.stderr)
     print("OUT:"+raw1.stdout.decode(),file=sys.stderr)
     destination_ref=raw1.stdout.decode().strip("\n")
