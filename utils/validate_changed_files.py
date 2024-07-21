@@ -12,7 +12,7 @@ def validate_changed_files():
 
     changed_files=raw.stdout.strip()
     if raw.stderr!=None:
-        print(raw.stderr)
+        print("ERR:"+raw.stderr)
         raise Exception
     print(f"Changed files: {changed_files}")
 
