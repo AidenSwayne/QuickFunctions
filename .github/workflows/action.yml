@@ -131,6 +131,8 @@ jobs:
         git config --global user.name "GitHub Actions"
         git switch main
         git pull origin main
+        git add .
+        git commit -m "merging PR"
         git rebase origin/main
         python utils/generate_leaderboard_table.py
         
