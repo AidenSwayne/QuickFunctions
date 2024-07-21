@@ -150,6 +150,3 @@ jobs:
         git commit -m "Update leaderboard"
         git rebase origin/main
         git push origin main
-    - name: Debugging with verbose
-      if: failure()
-      run: git push origin main --verbose
