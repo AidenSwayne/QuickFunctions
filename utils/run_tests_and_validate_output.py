@@ -13,16 +13,9 @@ def run_tests_and_validate_output():
         subprocess.run(["git", "fetch", "fork", destination])
         subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{destination}"])
         raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}..fork-branch"], capture_output=True, text=True)
-        file_dir = os.path.dirname(raw.stdout.strip().split("\n")[0])
-        print("CODE:"+str(raw.returncode))
-        print("OUT:"+raw.stdout)
-        print("ERR:"+raw.stderr)
-        print("DIR:"+file_dir)
         changed_files=raw.stdout.strip()
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
-        print("Filepath: "+file_path)
-        print("workspace:"+os.environ["GITHUB_WORKSPACE"])
         os.chdir(function_dir)
         if file_path.endswith('.py'):
             output = subprocess.run(["python", "tests.py"], capture_output=True, text=True).stdout.strip()
