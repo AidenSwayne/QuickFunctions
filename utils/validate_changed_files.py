@@ -12,9 +12,9 @@ def validate_changed_files():
     if raw1.returncode!=0:
         print(raw1.stderr.decode(),file=sys.stderr)
         raise Exception
-    subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
     destination_ref=raw1.stdout
     raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}","FETCH_HEAD"], capture_output=True)
+    subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
 
     changed_files=str(raw.stdout.decode()).strip()
     if raw.returncode!=0:
