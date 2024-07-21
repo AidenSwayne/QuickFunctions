@@ -125,9 +125,9 @@ jobs:
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub Actions"
         git pull origin main
-        git reset --hard origin/main
+        git rebase origin/main
         python utils/generate_leaderboard_table.py
-
+        
         echo "Current directory: $(pwd)"
         echo "Repository root: $(git rev-parse --show-toplevel)"
         echo "Current branch: $(git branch --show-current)"

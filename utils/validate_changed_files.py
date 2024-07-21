@@ -28,7 +28,7 @@ def validate_changed_files():
 
     return None
 
-error_message = "validate_changed_files()"
+error_message = validate_changed_files()
 if error_message:
     with open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "temp.txt"), "w") as f:
         f.write(error_message)
