@@ -8,20 +8,20 @@ def validate_changed_files():
 
     subprocess.run(["git", "remote", "add", "fork", source])
     subprocess.run(["git", "fetch", "fork", source_ref])
-    raw1=subprocess.run(["git","merge-base",os.environ["MERGE_DESTINATION_SHA"],"FETCH_HEAD"],capture_output=True)
+    raw1=subprocess.run(["git","merge-base",os.environ["MERGE_DESTINATION_SHA"],"FETCH_HEAD"],capture_output=True,text=True)
     if raw1.returncode!=0:
-        print(raw1.stderr.decode(),file=sys.stderr)
+        print(raw1.stderr,file=sys.stderr)
         raise Exception
-    destination_ref=raw1.stdout.decode().strip("\n")
+    destination_ref=raw1.stdout.strip("\n")
     print(destination_ref)
     print("ERR:"+subprocess.run(["git", "rev-parse", "--verify", "FETCH_HEAD"],capture_output=True,text=True).stderr,file=sys.stderr)
     print("OUT:"+subprocess.run(["git", "rev-parse", "--verify", "FETCH_HEAD"],capture_output=True,text=True).stdout,file=sys.stderr)
-    raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}","--","FETCH_HEAD"], capture_output=True)
+    raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}","--","FETCH_HEAD"], capture_output=True, text=True)
     subprocess.run(["git", "checkout", "-b", "fork-branch", f"fork/{source_ref}"])
 
-    changed_files=str(raw.stdout.decode()).strip()
+    changed_files=raw.stdout.strip()
     if raw.returncode!=0:
-        print("ERR:"+str(raw.stderr.decode()), flush=True, file=sys.stderr)
+        print("ERR:"+raw.stderr, flush=True, file=sys.stderr)
         raise Exception
     print(f"Changed files: {changed_files}")
 
