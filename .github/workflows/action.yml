@@ -34,6 +34,10 @@ jobs:
 
     - name: Validate Changed Files
       id: validate_files
+      env:
+        MERGE_SOURCE_REF: ${{ github.event.pull_request.head.ref }}
+        MERGE_DESTINATION_REF: ${{ github.event.pull_request.base.ref }}
+        MERGE_SOURCE: ${{ github.event.pull_request.head.repo.clone_url }}
       run: |
         output=$(python utils/validate_changed_files.py)
         echo "changed_file_path=$(echo "$output" | sed -n 's/.*Changed files: //p')" >> $GITHUB_OUTPUT
