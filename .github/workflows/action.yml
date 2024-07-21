@@ -47,10 +47,9 @@ jobs:
     - name: Run Tests and Validate Output
       id: run_tests
       env: 
-        REPO: ${{github.repository}}
-        MERGE_DESTINATION: ${{github.event.pull_request.base.label}}
-        MERGE_DESTINATION_REF: ${{github.base_ref}}
-        MERGE_SOURCE: ${{github.event.pull_request.head.label}}
+        MERGE_DESTINATION: ${{ github.event.pull_request.head.ref }}
+        MERGE_DESTINATION_REF: ${{ github.event.pull_request.base.ref }}
+        MERGE_SOURCE: ${{ github.event.pull_request.head.repo.clone_url }}
         CONTEXT: ${{toJson(github)}}
       run: |
         echo "Begin running tests"
