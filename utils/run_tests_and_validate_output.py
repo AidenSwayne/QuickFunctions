@@ -7,7 +7,7 @@ import datetime
 def run_tests_and_validate_output():
     try:
         destination_ref=os.environ["MERGE_DESTINATION_REF"]
-        raw = subprocess.run(["git", "diff","--name-only", f"{destination_ref}..fork-branch"], capture_output=True, text=True)
+        raw = subprocess.run(["git", "diff","--name-only", destination_ref,"FETCH_HEAD"], capture_output=True, text=True)
         changed_files=raw.stdout.strip()
         file_path = changed_files.split("\n")[0]
         function_dir = os.path.dirname(file_path)
