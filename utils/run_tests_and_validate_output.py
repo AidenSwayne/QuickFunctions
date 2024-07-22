@@ -19,7 +19,7 @@ def run_tests_and_validate_output():
         elif file_path.endswith('.js'):
             output = subprocess.run(["node", "tests.js"], capture_output=True, text=True).stdout.strip()
         elif file_path.endswith('.cpp'):
-            compile_result = subprocess.run(["g++", "-o", "tests", "tests.cpp", "function.cpp"], capture_output=True, text=True)
+            compile_result = subprocess.run(["g++", "-O3", "tests", "tests.cpp", "function.cpp"], capture_output=True, text=True)
             if compile_result.returncode != 0:
                 return {"error": f"C++ compilation failed:\n{compile_result.stderr}"}
             if os.path.exists("./tests"):
